@@ -11,6 +11,7 @@ import { TransactionType } from "../../models/enums/transaction.enum";
 import TransactionData from "../../components/Transactions/TransactionData";
 import { useAppSelector } from "../../hooks/redux";
 import { ITransaction } from "../../models/ITransaction";
+import { BallTriangle } from "react-loader-spinner";
 
 const TransactionPage = () => {
   // const dispatch = useAppDispatch();
