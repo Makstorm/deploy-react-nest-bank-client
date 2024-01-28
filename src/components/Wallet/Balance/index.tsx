@@ -26,7 +26,7 @@ const Balance: FC = () => {
   return (
     <p className="balance">
       {isLoading && <Skeleton height={34} width={20} />}
-      {`$ ${data?.balance}`}
+      {data ? `$ ${data?.balance}` : null}
     </p>
   );
 };

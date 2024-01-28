@@ -208,21 +208,20 @@ const AuthPage = () => {
 
         {error1 ? <AuthError>Something wrong happend</AuthError> : null}
         {error ? <AuthError>{error}</AuthError> : null}
-        {isLoading ||
-          (Loading1 && (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <BallTriangle
-                height={100}
-                width={100}
-                radius={5}
-                color="#5b94e9"
-                ariaLabel="ball-triangle-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-              />
-            </div>
-          ))}
+        {(isLoading || Loading1) && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BallTriangle
+              height={40}
+              width={40}
+              radius={5}
+              color="#5b94e9"
+              ariaLabel="ball-triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
+        )}
         {isSuccess ? (
           <AuthError success>Email password recovery sent</AuthError>
         ) : null}
