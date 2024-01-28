@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren } from "react";
 import style from "./index.module.css";
 
 const Page: FC<PropsWithChildren> = ({ children }) => {
