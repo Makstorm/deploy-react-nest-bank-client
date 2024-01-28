@@ -1,0 +1,35 @@
+@use "../../../sasslib/service.scss" as s;
+
+.button {
+  padding: 14px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 12px;
+  background: #775ce5;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+
+  &--outline {
+    background: #fff;
+    border: 1px solid #775ce5;
+    color: #775ce5;
+
+    &-danger {
+      background: #fff;
+      border: 1px solid s.color(red);
+      color: s.color(red);
+    }
+  }
+
+  &--danger {
+    background-color: s.color(red);
+  }
+
+  @include s.click;
+}
