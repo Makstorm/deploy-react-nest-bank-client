@@ -68,8 +68,8 @@ const ConfirmPage = () => {
             {Loader2 && (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <BallTriangle
-                  height={100}
-                  width={100}
+                  height={40}
+                  width={40}
                   radius={5}
                   color="#5b94e9"
                   ariaLabel="ball-triangle-loading"
@@ -109,8 +109,8 @@ const ConfirmPage = () => {
             {Loader1 && (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <BallTriangle
-                  height={100}
-                  width={100}
+                  height={40}
+                  width={40}
                   radius={5}
                   color="#5b94e9"
                   ariaLabel="ball-triangle-loading"
