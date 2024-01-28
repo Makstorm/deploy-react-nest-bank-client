@@ -14,38 +14,6 @@ import ProtectedRoute from "./ProtectedRoute";
 const AppRouter = () => {
   const isAuth = useAppSelector((state) => state.userReduser.isAuth);
 
-  // const router = createBrowserRouter(
-  //   createRoutesFromElements(
-  //     <>
-  //       {user &&
-  //         authRoutes.map(({ path, Component }) => (
-  //           <Route
-  //             key={path}
-  //             path={path}
-  //             element={<Component />}
-  //             errorElement={<div>404 Not found</div>}
-  //           />
-  //         ))}
-  //       {publicRoutes.map(({ path, Component }) => (
-  //         <Route
-  //           key={path}
-  //           path={path}
-  //           element={<Component />}
-  //           errorElement={<div>404 Not found</div>}
-  //         />
-  //       ))}
-  //       <Route
-  //         path="*"
-  //         element={
-  //           (user && <Navigate to={BALANCE_ROUTE} />) || (
-  //             <Navigate to={INDEX_ROUTE} />
-  //           )
-  //         }
-  //       />
-  //     </>
-  //   )
-  // );
-
   const createRoutes = () => {
     return createRoutesFromElements(
       <>
