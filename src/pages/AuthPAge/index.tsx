@@ -16,14 +16,17 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchUser } from "../../store/reducers/ActionCreators";
 import { setUserError } from "../../store/reducers/UserSlice";
 import { userAPI } from "../../store/services/UserService";
+import { BallTriangle } from "react-loader-spinner";
 
 const AuthPage = () => {
-  const [passwordRecovery, { error: error1, isSuccess }] =
+  const [passwordRecovery, { error: error1, isSuccess, isLoading: Loading1 }] =
     userAPI.useUserPasswordRecoverMutation();
 
   const dispatch = useAppDispatch();
 
-  const { error, isAuth } = useAppSelector((state) => state.userReduser);
+  const { error, isAuth, isLoading } = useAppSelector(
+    (state) => state.userReduser
+  );
 
   const [formData, setFormData] = useState({
     email: "",
@@ -205,6 +208,21 @@ const AuthPage = () => {
 
         {error1 ? <AuthError>Something wrong happend</AuthError> : null}
         {error ? <AuthError>{error}</AuthError> : null}
+        {isLoading ||
+          (Loading1 && (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <BallTriangle
+                height={100}
+                width={100}
+                radius={5}
+                color="#5b94e9"
+                ariaLabel="ball-triangle-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              />
+            </div>
+          ))}
         {isSuccess ? (
           <AuthError success>Email password recovery sent</AuthError>
         ) : null}

@@ -14,10 +14,11 @@ import { InputType } from "../../components/Auth/AuthInput/type.enum";
 import { transactionsAPI } from "../../store/services/TransactionsService";
 import { CreateTransactionDto } from "../../models/dto/create-transaction.dto";
 import AuthError from "../../components/Auth/AuthErrror";
+import { BallTriangle } from "react-loader-spinner";
 
 const SendPage = () => {
   // const dispatch = useAppDispatch();
-  const [createTransaction, { isSuccess }] =
+  const [createTransaction, { isSuccess, isLoading }] =
     transactionsAPI.useCreateTransactionMutation();
 
   const [formData, setFormData] = useState({
@@ -62,6 +63,20 @@ const SendPage = () => {
         </ConfirmButton>
 
         {isSuccess && <AuthError success>Payment successfull</AuthError>}
+        {isLoading && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BallTriangle
+              height={40}
+              width={40}
+              radius={5}
+              color="#5b94e9"
+              ariaLabel="ball-triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
+        )}
 
         {/* <ConfirmButton {...getButton()}></ConfirmButton> */}
 

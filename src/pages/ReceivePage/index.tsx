@@ -11,11 +11,12 @@ import { PaymentSysytemsType } from "../../models/enums/payment-system.enum";
 import { transactionsAPI } from "../../store/services/TransactionsService";
 import { AccountRemplenishmentDto } from "../../models/dto/account-replenishment.dto";
 import AuthError from "../../components/Auth/AuthErrror";
+import { BallTriangle } from "react-loader-spinner";
 
 const ReceivePage = () => {
   // const dispatch = useAppDispatch();
 
-  const [accountReplenishment, { isSuccess }] =
+  const [accountReplenishment, { isSuccess, isLoading }] =
     transactionsAPI.useCreateAccountReplenishmentMutation();
 
   const [formData, setFormData] = useState({
@@ -59,6 +60,20 @@ const ReceivePage = () => {
         {/* <ConfirmButton {...getButton()}></ConfirmButton> */}
 
         {/* {error ? <AuthError>{error}</AuthError> : null} */}
+        {isLoading && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BallTriangle
+              height={40}
+              width={40}
+              radius={5}
+              color="#5b94e9"
+              ariaLabel="ball-triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
+        )}
         {isSuccess && <AuthError success>Paymant successfull</AuthError>}
       </PhonePageContent>
     </PhonePage>

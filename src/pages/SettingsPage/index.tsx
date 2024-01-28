@@ -16,11 +16,12 @@ import { useAppDispatch } from "../../hooks/redux";
 import { logOut } from "../../store/reducers/UserSlice";
 import { useNavigate } from "react-router-dom";
 import { INDEX_ROUTE } from "../../components/AppRouter/consts";
+import { BallTriangle } from "react-loader-spinner";
 
 const SettingsPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [updateUser, { error, isSuccess }] =
+  const [updateUser, { error, isSuccess, isLoading }] =
     userAPI.useUpdateUserDataMutation();
 
   const [changeEmailFormData, setEmailFormData] = useState({
@@ -125,6 +126,20 @@ const SettingsPage = () => {
 
         {error ? <AuthError>Something went wrong</AuthError> : null}
         {isSuccess ? <AuthError success>Data changed</AuthError> : null}
+        {isLoading && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BallTriangle
+              height={40}
+              width={40}
+              radius={5}
+              color="#5b94e9"
+              ariaLabel="ball-triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
+        )}
       </PhonePageContent>
     </PhonePage>
   );

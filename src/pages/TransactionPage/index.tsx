@@ -21,7 +21,9 @@ const TransactionPage = () => {
 
   const { id } = useParams();
 
-  const { data } = transactionsAPI.useFetchOneTransactionQuery(String(id));
+  const { data, isLoading } = transactionsAPI.useFetchOneTransactionQuery(
+    String(id)
+  );
 
   const getType = (transaction: ITransaction) => {
     if (transaction.type === TransactionType.REMPLENISHABLE) {
@@ -45,9 +47,26 @@ const TransactionPage = () => {
       </section>
 
       <PhonePageContent>
-        <PaymentBar type={getType(data)} amount={data ? data.amount : 0} />
+        {isLoading ? (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BallTriangle
+              height={100}
+              width={100}
+              radius={5}
+              color="#5b94e9"
+              ariaLabel="ball-triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </div>
+        ) : (
+          <>
+            <PaymentBar type={getType(data)} amount={data ? data.amount : 0} />
 
-        <TransactionData transaction={data ? data : null} />
+            <TransactionData transaction={data ? data : null} />
+          </>
+        )}
       </PhonePageContent>
     </PhonePage>
   );
