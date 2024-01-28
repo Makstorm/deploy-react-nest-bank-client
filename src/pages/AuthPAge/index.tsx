@@ -8,13 +8,17 @@ import PageInfoTitle from "../../components/Phone/PageInfoTitle";
 import PhonePage from "../../components/Phone/PhonePage";
 import PhonePageContent from "../../components/Phone/PhonePageContent";
 import { useEffect, useState } from "react";
-import { registration } from "../../http/userAPI";
 import { BALANCE_ROUTE, SIGNIN_ROUTE } from "../../components/AppRouter/consts";
 import AuthError from "../../components/Auth/AuthErrror";
-
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchUser } from "../../store/reducers/ActionCreators";
-import { setUserError } from "../../store/reducers/UserSlice";
+import {
+  fetchUser,
+  fetchUserRegister,
+} from "../../store/reducers/ActionCreators";
+import {
+  setUserError,
+  toggleIsRegistered,
+} from "../../store/reducers/UserSlice";
 import { userAPI } from "../../store/services/UserService";
 import { BallTriangle } from "react-loader-spinner";
 
@@ -24,7 +28,7 @@ const AuthPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { error, isAuth, isLoading } = useAppSelector(
+  const { error, isAuth, isLoading, isRegistered } = useAppSelector(
     (state) => state.userReduser
   );
 
@@ -44,9 +48,19 @@ const AuthPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuth) navigate(BALANCE_ROUTE);
+    if (isAuth) {
+      navigate(BALANCE_ROUTE);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
+
+  useEffect(() => {
+    if (isRegistered && location.pathname === SIGNIN_ROUTE) {
+      dispatch(toggleIsRegistered());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRegistered]);
 
   const getTitle = (): { title: string; subtitle: string } => {
     switch (location.pathname) {
@@ -86,7 +100,14 @@ const AuthPage = () => {
     } else {
       if (formData.email && formData.password && formData.text) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        await registration(formData.email, formData.password, formData.text);
+        // await registration(formData.email, formData.password, formData.text);
+        dispatch(
+          fetchUserRegister({
+            email: formData.email,
+            password: formData.password,
+            username: formData.text,
+          })
+        );
       } else {
         dispatch(setUserError("Missing credentials"));
       }
@@ -224,6 +245,12 @@ const AuthPage = () => {
         )}
         {isSuccess ? (
           <AuthError success>Email password recovery sent</AuthError>
+        ) : null}
+
+        {isRegistered ? (
+          <AuthError success>
+            Registratio successfull! Sent email confirm lint to Your Email
+          </AuthError>
         ) : null}
       </PhonePageContent>
     </PhonePage>

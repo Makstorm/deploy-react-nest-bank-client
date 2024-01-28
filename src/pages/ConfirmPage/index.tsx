@@ -9,7 +9,10 @@ import ConfirmButton from "../../components/Navigations/ConfirmButton";
 import { confirmAPI } from "../../store/services/ConfirmService";
 import PhonePageContent from "../../components/Phone/PhonePageContent";
 import { BallTriangle } from "react-loader-spinner";
-import { SIGNIN_ROUTE } from "../../components/AppRouter/consts";
+import {
+  SIGNIN_ROUTE,
+  SIGNUP_CONFIRM_ROUTE,
+} from "../../components/AppRouter/consts";
 import AuthError from "../../components/Auth/AuthErrror";
 
 const ConfirmPage = () => {
@@ -48,7 +51,7 @@ const ConfirmPage = () => {
       </section>
 
       <PhonePageContent>
-        {location.pathname === "signup-confirm" ? (
+        {location.pathname === SIGNUP_CONFIRM_ROUTE ? (
           <>
             <PageInfoTitle
               title="Confirm account"
@@ -63,7 +66,9 @@ const ConfirmPage = () => {
                 }
               }}
               outline={false}
-            ></ConfirmButton>
+            >
+              Confirm registration
+            </ConfirmButton>
 
             {Loader2 && (
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -106,7 +111,7 @@ const ConfirmPage = () => {
               Recover password
             </ConfirmButton>
 
-            {Loader1 && (
+            {(Loader1 || Loader2) && (
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <BallTriangle
                   height={40}

@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../models/IUser";
-import { fetchUser } from "./ActionCreators";
+import { fetchUser, fetchUserRegister } from "./ActionCreators";
 
 interface UserState {
   user: IUser | null | undefined;
   isAuth: boolean;
+  isRegistered: boolean;
   isLoading: boolean;
   error: string | null | undefined;
 }
@@ -12,6 +13,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   isAuth: false,
+  isRegistered: false,
   isLoading: false,
   error: null,
 };
@@ -22,6 +24,10 @@ export const userSlice = createSlice({
   reducers: {
     logOut: (state) => {
       state.isAuth = false;
+    },
+
+    toggleIsRegistered: (state) => {
+      state.isRegistered = false;
     },
 
     resetUser: (state) => {
@@ -50,9 +56,22 @@ export const userSlice = createSlice({
         state.isLoading = false;
 
         state.error = action.error.message;
+      })
+      .addCase(fetchUserRegister.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = "";
+        state.isRegistered = true;
+      })
+      .addCase(fetchUserRegister.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUserRegister.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export const { resetUser, setUserError, logOut } = userSlice.actions;
+export const { resetUser, setUserError, logOut, toggleIsRegistered } =
+  userSlice.actions;
 export default userSlice.reducer;
