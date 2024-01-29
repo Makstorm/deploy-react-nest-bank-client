@@ -55,7 +55,7 @@ const AppRouter = () => {
 
   const router = createBrowserRouter([
     {
-      element: width < 382 ? <FullPage /> : <PhoneDisplay />,
+      element: width < 500 ? <FullPage /> : <PhoneDisplay />,
       children: createRoutes(),
     },
   ]);
