@@ -37,9 +37,9 @@ const TransactionPage = () => {
       : TransactionType.PROFITABLE;
   };
 
-  if (!data) {
-    return <div>Ops thre isnt any transaction</div>;
-  }
+  // if (!data) {
+  //   return <div>Ops thre isnt any transaction</div>;
+  // }
 
   return (
     <PhonePage className="grey-bg">
@@ -49,10 +49,16 @@ const TransactionPage = () => {
 
       <PhonePageContent>
         {isLoading ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <BallTriangle
-              height={40}
-              width={40}
+              height={100}
+              width={100}
               radius={5}
               color="#5b94e9"
               ariaLabel="ball-triangle-loading"
@@ -63,7 +69,10 @@ const TransactionPage = () => {
           </div>
         ) : (
           <>
-            <PaymentBar type={getType(data)} amount={data ? data.amount : 0} />
+            <PaymentBar
+              type={getType(data as ITransaction)}
+              amount={data ? data.amount : 0}
+            />
 
             <TransactionData transaction={data ? data : null} />
           </>
