@@ -87,20 +87,15 @@ const AuthPage = () => {
 
   const auth = async () => {
     if (isLogin) {
-      //  //
       if (formData.email && formData.password) {
         dispatch(
           fetchUser({ email: formData.email, password: formData.password })
         );
-        // navigate(BALANCE_ROUTE);
       } else {
         dispatch(setUserError("Missing credentials"));
       }
-      //  //
     } else {
       if (formData.email && formData.password && formData.text) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        // await registration(formData.email, formData.password, formData.text);
         dispatch(
           fetchUserRegister({
             email: formData.email,
@@ -111,7 +106,6 @@ const AuthPage = () => {
       } else {
         dispatch(setUserError("Missing credentials"));
       }
-      // navigate(SIGNIN_ROUTE);
     }
   };
 

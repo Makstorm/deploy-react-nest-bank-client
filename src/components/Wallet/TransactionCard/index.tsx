@@ -58,9 +58,10 @@ const TransactionCard: FC<ITransactionCardProp> = ({
           <h4 className="text__name">
             {transaction.type === TransactionType.REMPLENISHABLE
               ? transaction.sender
-              : transaction.type === TransactionType.PROFITABLE
-              ? transaction.senderEmail
-              : transaction.receiverEmail}
+              : transaction.type === TransactionType.CONSUMABLE &&
+                transaction.senderEmail === userEmail
+              ? transaction.receiverEmail
+              : transaction.senderEmail}
           </h4>
           <p className="text__time-type">
             {getTime(new Date(transaction.date))} *{" "}

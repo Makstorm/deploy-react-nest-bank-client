@@ -12,7 +12,13 @@ export const registration = async (
   password: string,
   username: string
 ) => {
-  await $host.post<void>("/auth/signUp", { email, username, password });
+  try {
+    await $host.post<void>("/auth/signUp", { email, username, password });
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message);
+    }
+  }
 };
 
 export const login = async (email: string, password: string) => {
