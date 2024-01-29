@@ -1,13 +1,8 @@
-// import { useLocation, useNavigate } from "react-router-dom";
-
 import BackArrow from "../../components/Navigations/BackwardArrow";
-
 import PhonePage from "../../components/Phone/PhonePage";
 import PhonePageContent from "../../components/Phone/PhonePageContent";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import MoneyInput from "../../components/Common/MoneyInput";
-
 import ConfirmButton from "../../components/Navigations/ConfirmButton";
 import AuthInput from "../../components/Auth/AuthInput";
 import { InputType } from "../../components/Auth/AuthInput/type.enum";
@@ -15,10 +10,11 @@ import { transactionsAPI } from "../../store/services/TransactionsService";
 import { CreateTransactionDto } from "../../models/dto/create-transaction.dto";
 import AuthError from "../../components/Auth/AuthErrror";
 import { BallTriangle } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
+import { BALANCE_ROUTE } from "../../components/AppRouter/consts";
 
 const SendPage = () => {
-  // const dispatch = useAppDispatch();
-  const [createTransaction, { isSuccess, isLoading }] =
+  const [createTransaction, { isSuccess, isLoading, isError, error }] =
     transactionsAPI.useCreateTransactionMutation();
 
   const [formData, setFormData] = useState({
@@ -26,11 +22,19 @@ const SendPage = () => {
     email: "",
   });
 
+  const navigate = useNavigate();
+
   const onChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const navigate = useNavigate();
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        navigate(BALANCE_ROUTE);
+      }, 3000);
+    }
+  }, [isSuccess]);
 
   return (
     <PhonePage className="grey-bg">
@@ -62,6 +66,7 @@ const SendPage = () => {
           Send
         </ConfirmButton>
 
+        {isError && <AuthError>{(error as any).data.message}</AuthError>}
         {isSuccess && <AuthError success>Payment successfull</AuthError>}
         {isLoading && (
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -77,10 +82,6 @@ const SendPage = () => {
             />
           </div>
         )}
-
-        {/* <ConfirmButton {...getButton()}></ConfirmButton> */}
-
-        {/* {error ? <AuthError>{error}</AuthError> : null} */}
       </PhonePageContent>
     </PhonePage>
   );
