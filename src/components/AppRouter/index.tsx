@@ -10,9 +10,13 @@ import { authRoutes, publicRoutes } from "./routes";
 import { BALANCE_ROUTE, INDEX_ROUTE } from "./consts";
 import PhoneDisplay from "../../containers/PhoneDisplay";
 import ProtectedRoute from "./ProtectedRoute";
+import { useWindowSize } from "../../hooks/window-resize";
+import FullPage from "../../containers/FullPage";
 
 const AppRouter = () => {
   const isAuth = useAppSelector((state) => state.userReduser.isAuth);
+
+  const [width] = useWindowSize();
 
   const createRoutes = () => {
     return createRoutesFromElements(
@@ -50,7 +54,10 @@ const AppRouter = () => {
   };
 
   const router = createBrowserRouter([
-    { element: <PhoneDisplay />, children: createRoutes() },
+    {
+      element: width < 382 ? <FullPage /> : <PhoneDisplay />,
+      children: createRoutes(),
+    },
   ]);
 
   return <RouterProvider router={router} />;
