@@ -1,4 +1,4 @@
-import { $host } from ".";
+import { $authHost, $host } from ".";
 import { jwtDecode } from "jwt-decode";
 import { IUser } from "../models/IUser";
 import { AxiosError } from "axios";
@@ -32,6 +32,21 @@ export const login = async (email: string, password: string) => {
     const decode = jwtDecode<IUser>(data.accessToken);
 
     return decode;
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      throw new Error(e.response?.data.message);
+    }
+  }
+};
+
+export const check = async () => {
+  try {
+    const { data } = await $authHost.post<ITokenRes>("auth/check", {
+      Headers: {},
+    });
+    localStorage.setItem("token", data.accessToken);
+
+    return jwtDecode<IUser>(data.accessToken);
   } catch (e) {
     if (e instanceof AxiosError) {
       throw new Error(e.response?.data.message);

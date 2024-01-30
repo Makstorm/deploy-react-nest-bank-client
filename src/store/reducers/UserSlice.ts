@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../../models/IUser";
-import { fetchUser, fetchUserRegister } from "./ActionCreators";
+import { fetchIsAuth, fetchUser, fetchUserRegister } from "./ActionCreators";
 
 interface UserState {
   user: IUser | null | undefined;
@@ -70,6 +70,19 @@ export const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchUserRegister.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchIsAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = "";
+        state.user = action.payload;
+        state.isAuth = true;
+      })
+      .addCase(fetchIsAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchIsAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

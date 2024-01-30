@@ -1,11 +1,26 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import ConfirmButton from "../../components/Navigations/ConfirmButton";
 import "./index.scss";
 import { useNavigate } from "react-router-dom";
-import { SIGNIN_ROUTE, SIGNUP_ROUTE } from "../../components/AppRouter/consts";
+import {
+  BALANCE_ROUTE,
+  SIGNIN_ROUTE,
+  SIGNUP_ROUTE,
+} from "../../components/AppRouter/consts";
+import { useAppSelector } from "../../hooks/redux";
 
 const WelcomePage: FC = () => {
   const navigate = useNavigate();
+
+  const isAuth = useAppSelector((state) => state.userReduser.isAuth);
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate(BALANCE_ROUTE);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   return (
     <div className="welcome-page">

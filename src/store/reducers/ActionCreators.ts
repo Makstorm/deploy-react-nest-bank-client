@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { login, registration } from "../../http/userAPI";
+import { check, login, registration } from "../../http/userAPI";
 
 interface IUserLoginParams {
   email: string;
@@ -21,8 +21,12 @@ export const fetchUser = createAsyncThunk(
 );
 
 export const fetchUserRegister = createAsyncThunk(
-  "user/registration",
+  "user/check",
   async ({ email, password, username }: IUserRegistrationParams) => {
     return await registration(email, password, username);
   }
 );
+
+export const fetchIsAuth = createAsyncThunk("user/registration", async () => {
+  return await check();
+});
