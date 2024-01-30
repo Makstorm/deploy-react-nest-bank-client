@@ -1,8 +1,7 @@
-// import { useLocation, useNavigate } from "react-router-dom";
 import BackArrow from "../../components/Navigations/BackwardArrow";
 import PhonePage from "../../components/Phone/PhonePage";
 import PhonePageContent from "../../components/Phone/PhonePageContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MoneyInput from "../../components/Common/MoneyInput";
 import Divider from "../../components/Common/Divider";
 import SectioTitle from "../../components/Common/SectionTitle/SectionTitle";
@@ -12,12 +11,22 @@ import { transactionsAPI } from "../../store/services/TransactionsService";
 import { AccountRemplenishmentDto } from "../../models/dto/account-replenishment.dto";
 import AuthError from "../../components/Auth/AuthErrror";
 import { BallTriangle } from "react-loader-spinner";
+import { BALANCE_ROUTE } from "../../components/AppRouter/consts";
+import { useNavigate } from "react-router-dom";
 
 const ReceivePage = () => {
-  // const dispatch = useAppDispatch();
-
-  const [accountReplenishment, { isSuccess, isLoading }] =
+  const [accountReplenishment, { isSuccess, isLoading, isError, error }] =
     transactionsAPI.useCreateAccountReplenishmentMutation();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        navigate(BALANCE_ROUTE);
+      }, 3000);
+    }
+  }, [isSuccess]);
 
   const [formData, setFormData] = useState({
     money: "",
@@ -57,9 +66,6 @@ const ReceivePage = () => {
           type={PaymentSysytemsType.COINBASE}
         />
 
-        {/* <ConfirmButton {...getButton()}></ConfirmButton> */}
-
-        {/* {error ? <AuthError>{error}</AuthError> : null} */}
         {isLoading && (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <BallTriangle
@@ -74,6 +80,7 @@ const ReceivePage = () => {
             />
           </div>
         )}
+        {isError && <AuthError>{(error as any).data.message}</AuthError>}
         {isSuccess && <AuthError success>Paymant successfull</AuthError>}
       </PhonePageContent>
     </PhonePage>
