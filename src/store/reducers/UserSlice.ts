@@ -26,6 +26,10 @@ export const userSlice = createSlice({
       state.isAuth = false;
     },
 
+    toggleError: (state) => {
+      state.error = null;
+    },
+
     toggleIsRegistered: (state) => {
       state.isRegistered = false;
     },
@@ -72,6 +76,11 @@ export const userSlice = createSlice({
   },
 });
 
-export const { resetUser, setUserError, logOut, toggleIsRegistered } =
-  userSlice.actions;
+export const {
+  resetUser,
+  setUserError,
+  logOut,
+  toggleIsRegistered,
+  toggleError,
+} = userSlice.actions;
 export default userSlice.reducer;

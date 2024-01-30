@@ -17,6 +17,7 @@ import {
 } from "../../store/reducers/ActionCreators";
 import {
   setUserError,
+  toggleError,
   toggleIsRegistered,
 } from "../../store/reducers/UserSlice";
 import { userAPI } from "../../store/services/UserService";
@@ -46,6 +47,12 @@ const AuthPage = () => {
   const location = useLocation();
   const isLogin = location.pathname === SIGNIN_ROUTE;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(toggleError());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData]);
 
   useEffect(() => {
     if (isAuth) {
