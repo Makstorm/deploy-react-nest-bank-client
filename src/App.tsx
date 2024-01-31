@@ -9,7 +9,11 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchIsAuth());
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      dispatch(fetchIsAuth());
+    }
   }, []);
 
   return (
