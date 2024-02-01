@@ -250,7 +250,7 @@ const AuthPage = () => {
 
         {isRegistered ? (
           <AuthError success>
-            Registratio successfull! Sent email confirm lint to Your Email
+            Registration successfull! Sent email confirm lint to Your Email
           </AuthError>
         ) : null}
       </PhonePageContent>

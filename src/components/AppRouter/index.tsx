@@ -12,9 +12,10 @@ import PhoneDisplay from "../../containers/PhoneDisplay";
 import ProtectedRoute from "./ProtectedRoute";
 import { useWindowSize } from "../../hooks/window-resize";
 import FullPage from "../../containers/FullPage";
+import FullPageLoader from "../Common/FullPageLoader";
 
 const AppRouter = () => {
-  const isAuth = useAppSelector((state) => state.userReduser.isAuth);
+  const { isAuth, isLoading } = useAppSelector((state) => state.userReduser);
 
   const [width] = useWindowSize();
 
@@ -26,9 +27,13 @@ const AppRouter = () => {
             key={path}
             path={path}
             element={
-              <ProtectedRoute>
-                <Component />
-              </ProtectedRoute>
+              isLoading ? (
+                <FullPageLoader />
+              ) : (
+                <ProtectedRoute>
+                  <Component />
+                </ProtectedRoute>
+              )
             }
             errorElement={<div>404 Not found</div>}
           />
@@ -37,7 +42,7 @@ const AppRouter = () => {
           <Route
             key={path}
             path={path}
-            element={<Component />}
+            element={isLoading ? <FullPageLoader /> : <Component />}
             errorElement={<div>404 Not found</div>}
           />
         ))}
