@@ -34,7 +34,7 @@ const RecoveryForm = () => {
 
           <button
             type="submit"
-            disabled={props.isSubmitting}
+            disabled={props.isSubmitting || !props.isValid}
             className={`button `}
           >
             Change password
