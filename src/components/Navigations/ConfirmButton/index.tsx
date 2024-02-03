@@ -6,6 +6,7 @@ interface IConfirmButtonProps {
   outline: boolean;
   danger?: boolean;
   disable?: boolean;
+  disabled?: boolean;
 }
 
 const ConfirmButton: FC<PropsWithChildren<IConfirmButtonProps>> = ({
@@ -14,8 +15,13 @@ const ConfirmButton: FC<PropsWithChildren<IConfirmButtonProps>> = ({
   outline,
   danger,
   disable,
+  disabled,
 }) => {
   const [isButtonDisabled, setButtonDisabled] = useState(false);
+
+  if (disabled) {
+    setButtonDisabled(true);
+  }
 
   const onClickHandle: React.MouseEventHandler<HTMLButtonElement> = (
     event: React.MouseEvent<HTMLButtonElement>

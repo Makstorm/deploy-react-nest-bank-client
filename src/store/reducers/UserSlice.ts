@@ -6,6 +6,7 @@ interface UserState {
   user: IUser | null | undefined;
   isAuth: boolean;
   isRegistered: boolean;
+  isCheckLoading: boolean;
   isLoading: boolean;
   error: string | null | undefined;
 }
@@ -14,6 +15,7 @@ const initialState: UserState = {
   user: null,
   isAuth: false,
   isRegistered: false,
+  isCheckLoading: false,
   isLoading: false,
   error: null,
 };
@@ -74,16 +76,16 @@ export const userSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(fetchIsAuth.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isCheckLoading = false;
         state.error = "";
         state.user = action.payload;
         state.isAuth = true;
       })
       .addCase(fetchIsAuth.pending, (state) => {
-        state.isLoading = true;
+        state.isCheckLoading = true;
       })
       .addCase(fetchIsAuth.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isCheckLoading = false;
         state.error = action.error.message;
       });
   },

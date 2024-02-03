@@ -15,7 +15,9 @@ import FullPage from "../../containers/FullPage";
 import FullPageLoader from "../Common/FullPageLoader";
 
 const AppRouter = () => {
-  const { isAuth, isLoading } = useAppSelector((state) => state.userReduser);
+  const { isAuth, isCheckLoading } = useAppSelector(
+    (state) => state.userReduser
+  );
 
   const [width] = useWindowSize();
 
@@ -27,7 +29,7 @@ const AppRouter = () => {
             key={path}
             path={path}
             element={
-              isLoading ? (
+              isCheckLoading ? (
                 <FullPageLoader />
               ) : (
                 <ProtectedRoute>
@@ -42,7 +44,7 @@ const AppRouter = () => {
           <Route
             key={path}
             path={path}
-            element={isLoading ? <FullPageLoader /> : <Component />}
+            element={isCheckLoading ? <FullPageLoader /> : <Component />}
             errorElement={<div>404 Not found</div>}
           />
         ))}
